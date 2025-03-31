@@ -41,13 +41,13 @@ export class RegisterComponent {
     private messageService: MessageService
   ) {
     this.registerForm = this.fb.group({
-      nome: ['Emerson', [Validators.required, Validators.minLength(2)]],
+      nome: ['', [Validators.required, Validators.minLength(2)]],
       email: [
-        'emersonsilva81240@gmail.com',
+        '',
         [Validators.required, Validators.email],
         [this.emailExistsValidator()]
       ],
-      password: ['1234567', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
