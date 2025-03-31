@@ -1,0 +1,38 @@
+<div class="flex justify-center items-center min-h-screen px-4 py-8">
+  <p-card *ngIf="isLoading" styleClass="w-full max-w-md shadow-lg">
+    <ng-template pTemplate="header">
+      <div class="p-6 text-center">
+        <h2 class="text-2xl font-bold mb-2">Validando seu email</h2>
+        <p class="text-gray-600">Por favor, aguarde enquanto verificamos seu email.</p>
+      </div>
+    </ng-template>
+    <div class="flex justify-center py-8">
+      <p-progressSpinner styleClass="w-16 h-16"></p-progressSpinner>
+    </div>
+  </p-card>
+
+  <p-card *ngIf="!isLoading" styleClass="w-full max-w-md shadow-lg">
+    <ng-template pTemplate="header">
+      <div class="p-6 text-center">
+        <h2 class="text-2xl font-bold mb-2">
+          {{ isValidated ? 'Email Validado' : 'Falha na Validação' }}
+        </h2>
+        <p>
+          {{ isValidated ? 'E-mail validado com sucesso, agora você pode fazer login' : 'Não foi possível validar seu email.' }}
+        </p>
+      </div>
+    </ng-template>
+    <div class="flex flex-col items-center space-y-6 px-6 py-8">
+      <i *ngIf="isValidated" class="pi pi-check-circle text-green-500 text-7xl"></i>
+      <i *ngIf="!isValidated && isValidated !== null" class="pi pi-times-circle text-red-500 text-7xl"></i>
+      <p class="text-center text-lg">{{ message }}</p>
+      <div class="w-full mt-4">
+        <p-button
+          label="Voltar para a página inicial"
+          styleClass="w-full"
+          (onClick)="handleReturn()"
+        ></p-button>
+      </div>
+    </div>
+  </p-card>
+</div>

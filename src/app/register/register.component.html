@@ -1,0 +1,70 @@
+<div class="flex items-center justify-center min-h-screen px-4">
+  <div class="w-full max-w-md rounded-lg shadow-md p-8 space-y-6 register-container">
+    <h2 class="text-2xl font-bold text-center mb-6">Cadastro de Usuário</h2>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-5">
+      <p *ngIf="message" class="text-center text-sm py-2 px-3 rounded"
+         [ngClass]="{'text-red-500': message.includes('erro')}">
+        {{ message }}
+      </p>
+
+      <div class="space-y-2">
+        <label for="nome" class="block text-sm font-medium">Nome</label>
+        <input
+          id="nome"
+          pInputText
+          formControlName="nome"
+          type="text"
+          [class.p-invalid]="isFieldInvalid('nome')"
+          class="w-full"
+        >
+        <p-message *ngIf="isFieldInvalid('nome')" severity="error" text="Nome é obrigatório"></p-message>
+      </div>
+
+      <div class="space-y-2">
+        <label for="email" class="block text-sm font-medium">Email</label>
+        <input
+          id="email"
+          pInputText
+          formControlName="email"
+          type="email"
+          [class.p-invalid]="isFieldInvalid('email')"
+          class="w-full"
+        >
+        <p-message *ngIf="isFieldInvalid('email') && !hasEmailExistsError()" severity="error" text="Email inválido"></p-message>
+        <p-message *ngIf="hasEmailExistsError()" severity="error" text="Este e-mail já está em uso"></p-message>
+      </div>
+
+      <div class="space-y-2">
+        <label for="password" class="block text-sm font-medium">Senha</label>
+        <input
+          id="password"
+          pInputText
+          formControlName="password"
+          type="password"
+          [class.p-invalid]="isFieldInvalid('password')"
+          class="w-full"
+        >
+        <p-message *ngIf="isFieldInvalid('password')" severity="error" text="Senha deve ter no mínimo 6 caracteres"></p-message>
+      </div>
+
+      <div class="pt-2">
+        <p-button
+          type="submit"
+          label="Cadastrar"
+          [disabled]="registerForm.invalid || isLoading"
+          [loading]="isLoading"
+          styleClass="w-full"
+        ></p-button>
+      </div>
+
+      <div class="text-center pt-4">
+        <a routerLink="/login" class="text-sm hover:underline">
+          Já tenho conta
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<p-toast position="top-right"></p-toast>

@@ -1,0 +1,54 @@
+<nav class="flex items-center justify-between w-full shadow-sm px-4 py-3 border-b border-gray-200">
+
+  <div class="flex items-center gap-3">
+    <a routerLink="/" class="flex items-center gap-2 font-bold transition-colors hover:text-primary">
+      <i class="pi pi-book text-primary text-2xl"></i>
+      <span class="text-lg">Task Manager</span>
+    </a>
+  </div>
+
+
+  <div class="flex-1 mx-8">
+    <p-menubar
+      [model]="menuItems"
+      styleClass="bg-transparent border-none p-0 flex items-center"
+      [style]="{'boxShadow': 'none'}"
+    ></p-menubar>
+  </div>
+
+
+  <div class="flex items-center gap-4">
+    <ng-container *ngIf="isAuthenticated(); else notAuthenticated">
+      <p-menu #userMenu [model]="userMenuItems" [popup]="true" appendTo="body"></p-menu>
+      <button
+        class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center shadow-md hover:bg-gray-300 transition"
+        (click)="userMenu.toggle($event)"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-16 h-16 text-gray-600"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round"
+                d="M15.75 7.5C15.75 9.571 14.071 11.25 12 11.25C9.929 11.25 8.25 9.571 8.25 7.5C8.25 5.429 9.929 3.75 12 3.75C14.071 3.75 15.75 5.429 15.75 7.5zM4.5 20.25C4.5 16.936 7.186 14.25 10.5 14.25H13.5C16.814 14.25 19.5 16.936 19.5 20.25"
+          />
+        </svg>
+      </button>
+    </ng-container>
+
+
+    <ng-template #notAuthenticated>
+      <p-button
+        label="Entrar"
+        icon="pi pi-sign-in"
+        routerLink="/login"
+        styleClass="p-button-outlined"
+      ></p-button>
+    </ng-template>
+  </div>
+</nav>
+
+<router-outlet />

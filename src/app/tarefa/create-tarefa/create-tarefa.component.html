@@ -1,0 +1,85 @@
+<div class="container mx-auto max-w-3xl py-8 px-6">
+  <h2 class="text-2xl font-semibold mb-6">{{ isEditMode ? 'Editar Tarefa' : 'Cadastrar Tarefa' }}</h2>
+
+
+  <div *ngIf="isEditMode && !isLoading && isFormEmpty()" class="mt-6 space-y-4">
+    <p-message
+      severity="warn"
+      text="Tarefa não encontrada com o ID fornecido."
+      class="block w-full"
+    ></p-message>
+    <p-button
+      label="Voltar"
+      styleClass="p-button-secondary"
+      [routerLink]="['/tarefas']"
+      class="mt-4"
+    ></p-button>
+  </div>
+
+
+  <form *ngIf="!isEditMode || (!isLoading && !isFormEmpty())" [formGroup]="tarefaForm" (ngSubmit)="onSubmit()" class="space-y-6">
+    <input type="hidden" formControlName="situacao">
+
+    <div class="p-field space-y-2">
+      <label class="block font-medium">Título</label>
+      <input pInputText formControlName="titulo" [class.p-invalid]="isFieldInvalid('titulo')" class="w-full">
+      <p-message *ngIf="isFieldInvalid('titulo')" severity="error" text="Título é obrigatório"></p-message>
+    </div>
+
+    <div class="p-field space-y-2">
+      <label class="block font-medium">Descrição</label>
+      <input pInputText formControlName="descricao" [class.p-invalid]="isFieldInvalid('descricao')" class="w-full">
+      <p-message *ngIf="isFieldInvalid('descricao')" severity="error" text="Descrição é obrigatória"></p-message>
+    </div>
+
+    <div class="p-field space-y-2">
+      <label class="block font-medium">Responsável</label>
+      <p-dropdown
+        [options]="responsaveis"
+        formControlName="responsavel"
+        placeholder="Selecione o responsável"
+        [class.p-invalid]="isFieldInvalid('responsavel')"
+        class="w-full"
+      ></p-dropdown>
+      <p-message *ngIf="isFieldInvalid('responsavel')" severity="error" text="Responsável é obrigatório"></p-message>
+    </div>
+
+    <div class="p-field space-y-2">
+      <label class="block font-medium">Prioridade</label>
+      <p-dropdown
+        [options]="prioridades"
+        formControlName="prioridade"
+        placeholder="Selecione a prioridade"
+        [class.p-invalid]="isFieldInvalid('prioridade')"
+        class="w-full"
+      ></p-dropdown>
+      <p-message *ngIf="isFieldInvalid('prioridade')" severity="error" text="Prioridade é obrigatória"></p-message>
+    </div>
+
+    <div class="p-field space-y-2">
+      <label class="block font-medium">Deadline</label>
+      <p-calendar
+        formControlName="deadline"
+        dateFormat="yy-mm-dd"
+        [showIcon]="true"
+        [class.p-invalid]="isFieldInvalid('deadline')"
+        class="w-full"
+      ></p-calendar>
+      <p-message *ngIf="isFieldInvalid('deadline')" severity="error" text="Deadline é obrigatória"></p-message>
+    </div>
+
+    <div class="flex gap-4 mt-8">
+      <p-button
+        type="submit"
+        [label]="isEditMode ? 'Atualizar' : 'Cadastrar'"
+        [disabled]="tarefaForm.invalid || isLoading"
+        [loading]="isLoading"
+      ></p-button>
+      <p-button
+        label="Cancelar"
+        styleClass="p-button-secondary"
+        [routerLink]="['/tarefas']"
+      ></p-button>
+    </div>
+  </form>
+</div>
